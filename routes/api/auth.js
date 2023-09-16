@@ -7,6 +7,8 @@ const {
   getCurrent,
   logout,
   updateAvatar,
+  verifyEmail,
+  resendVerifyEmail,
 } = require("../../controllers/auth");
 const authenticate = require("../../middlewares/authenticate");
 const upload = require("../../middlewares/upload");
@@ -14,6 +16,8 @@ const upload = require("../../middlewares/upload");
 const router = express.Router();
 
 router.post("/register", validateBody(schemas.registerSchema), register);
+router.get("/verify:verificationCode", verifyEmail);
+router.post("/verify", validateBody(schemas.emailSchema), resendVerifyEmail);
 router.post("/login", validateBody(schemas.loginSchema), login);
 router.get("/current", authenticate, getCurrent);
 router.post("/logout", authenticate, logout);
